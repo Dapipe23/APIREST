@@ -5,12 +5,12 @@ const bdmysql = new Sequelize(
     'railway',
     'root',
     //ajustar el password de cada uno
-    'iYqjzvUUBcPpPPDBJoOisMNIJOOoNkdf',
+    'olsXffWxZkisqgIfOceBMWNBIUhsdkfe',
     {
         //ajustar el host de cada uno   
-        host: 'yamabiko.proxy.rlwy.net',
+        host: 'shortline.proxy.rlwy.net',
         //ajustar el puerto de cada uno
-        port: '31120',
+        port: '10751',
         dialect: 'mysql'
     }
 );
