@@ -7,7 +7,7 @@ const bdmysql = new Sequelize(
     //ajustar el password de cada uno
     'iYqjzvUUBcPpPPDBJoOisMNIJOOoNkdf',
     {
-        //ajustar el host de cada uno
+        //ajustar el host de cada uno   
         host: 'yamabiko.proxy.rlwy.net',
         //ajustar el puerto de cada uno
         port: '31120',
