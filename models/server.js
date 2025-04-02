@@ -2,10 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const { bdmysql } = require('../database/MySqlConnection');
 
+const { dbConnectionMongo } = require('../database/MongoConnection');
+
 class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
+
 
         this.pathsMySql = {
             heroes: '/api/heroes',
@@ -14,6 +17,8 @@ class Server {
         };
 
         this.dbConnection();
+
+        this.conectarBDMongo();
 
         this.middlewares();
 
@@ -34,6 +39,10 @@ class Server {
         } catch (error) {
             console.error('No se pudo conectar a la base de datos MySQL:', error);
         }
+    }
+
+    async conectarBDMongo(){
+        await dbConnectionMongo();
     }
 
     middlewares() {
