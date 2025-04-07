@@ -16,6 +16,11 @@ class Server {
             protagonistas: '/api/protagonistas',
         };
 
+        this.pathsMongo = {
+            auth: '/api/auth',
+            usuarios: '/api/usuarios',
+        }
+
         this.dbConnection();
 
         this.conectarBDMongo();
@@ -59,6 +64,8 @@ class Server {
         this.app.use(this.pathsMySql.peliculas, require('../routes/peliculas.route'));
 
         this.app.use(this.pathsMySql.protagonistas, require('../routes/protagonista.route'));
+
+        this.app.use(this.pathsMongo.usuarios, require('../routes/mongoUsuario.route'));
     }
 
     listen() {
