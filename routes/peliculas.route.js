@@ -1,18 +1,34 @@
 const { Router } = require('express');
-const {
-    peliculaGet,
+
+const { peliculasGet, 
     peliculaIdGet,
-    peliculaPost,
+    peliculasComoGet,
+    peliculasPost,
     peliculaPut,
-    peliculaDelete,
+    peliculaDelete
+    //pruebaPost,
+    //pruebaPut,
+    //pruebaDelete,
+    //pruebaPatch 
 } = require('../controllers/peliculas.controller');
 
 const router = Router();
 
-router.get('/', peliculaGet); // GET /api/pelicula
-router.get('/:id', peliculaIdGet); // GET /api/pelicula/1
-router.post('/', peliculaPost); // POST /api/pelicula
-router.put('/:id', peliculaPut); // PUT /api/pelicula/1
+router.get('/', peliculasGet);
+
+router.get('/:id', peliculaIdGet);
+
+router.get('/como/:termino', peliculasComoGet);
+
+//Para insertar un Heroe en la BD
+router.post('/', peliculasPost);
+
+//Para modificar un Heroe en la BD
+router.put('/:id', peliculaPut);
+
+//Para eliminar un Heroe de la BD
 router.delete('/:id', peliculaDelete);
+
+//router.patch('/', usuariosPatch);
 
 module.exports = router;

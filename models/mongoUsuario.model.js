@@ -1,6 +1,5 @@
 const { Schema, model} = require('mongoose');
 
-
 const UsuarioSchema = Schema({
     nombre:{
         type: String,
@@ -18,13 +17,13 @@ const UsuarioSchema = Schema({
     img:{
         type: String,
     },
-   
+    
     rol:{
         type: String,
         required: [true, 'El role es obligatorio'],
         enum: ['ADMIN_ROLE','USER_ROLE']
     },
-   
+    
     /*
     rol: {
         type: Schema.Types.ObjectId,
@@ -32,8 +31,6 @@ const UsuarioSchema = Schema({
         required: [true, 'El role es obligatorio'],
     },
     */
-
-
     estado:{
         type: Boolean,
         default: true
@@ -44,12 +41,11 @@ const UsuarioSchema = Schema({
     },
     fecha_creacion: {
         type: Date,
-        default: Date.now,
-        required: 'Debe tener una fecha de Creacion.'
+		default: Date.now,
+		required: 'Debe tener una fecha de Creacion.'
     },
     fecha_actualizacion: {type: Date},
 });
-
 
 //Quita los campos que no quiero ver.
 UsuarioSchema.methods.toJSON = function() {
@@ -57,6 +53,5 @@ UsuarioSchema.methods.toJSON = function() {
     usuario.uid = _id;
     return usuario;
 }
-
 
 module.exports = model('Usuario', UsuarioSchema);

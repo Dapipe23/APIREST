@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { request, response } = require("express");
-const Usuario = require('../models/mongoUsuario.model')
+const Heroe = require('../models/mongoHeroe.model')
 
 
 
@@ -22,28 +22,28 @@ const validarJWT = async (req = request, res = response, next) => {
 
 
         //console.log(uid);
-        const usuario = await Usuario.findById(uid)
+        const heroe = await Heroe.findById(uid)
 
 
-        if(!usuario){
+        if(!heroe){
             return res.status(401).json({
-                msg: 'Token no valido - usuario no existe en BD'
+                msg: 'Token no valido - heroe no existe en BD'
             })
 
 
         }
 
 
-        if(!usuario.estado){
+        if(!heroe.estado){
             return res.status(401).json({
-                msg: 'Token no valido - usuario con estado: false'
+                msg: 'Token no valido - Heroe con estado: false'
             })
 
 
         }
 
 
-        req.usuario = usuario;
+        req.heroe = heroe;
 
 
         next();

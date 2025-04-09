@@ -71,7 +71,7 @@ const heroeIdGet = async (req, res = response) => {
         apikey,
         page,
         limit
-    })
+       })
 
       */
 }
@@ -103,6 +103,7 @@ const heroesComoGet = async(req = request, res = response) => {
 
 
 const heroesPost = async (req, res = response) => {
+ 
     try {
 
         console.log(req.body);
@@ -122,7 +123,7 @@ const heroesPost = async (req, res = response) => {
         // Guardar en BD
         newHeroe = await heroe.save();
 
-        console.log(newHeroe.null);
+        //console.log(newHeroe.null);
         //Ajusta el Id del nuevo registro al Heroe
         heroe.id = newHeroe.null;
 
@@ -168,12 +169,14 @@ const heroePut = async (req, res = response) => {
         }
 
         console.log(body)
+       
         await heroe.update(body);
 
 
         res.json({ok:true,
-                msg:"Heroe actualizado",
-                data:heroe});
+                 msg:"Heroe actualizado",
+                 data:heroe});
+   
 
     } catch (error) {
         console.log(error);
@@ -189,39 +192,48 @@ const heroePut = async (req, res = response) => {
 const heroeDelete = async (req, res = response) => {
     const { id } = req.params;
 
+    console.log(id);
+ 
+    //var condition = { where :{id: id} };
+
     try {
-        // Buscar el héroe en la base de datos
+
+
         const heroe = await Heroes.findByPk(id);
+        //const usuarioAutenticado = req.usuario;
+
+
         if (!heroe) {
-            return res.status(404).json({
-                ok: false,
-                msg: `No existe un héroe con el id: ${id}`
-            });
+            return res.status(404).json({ok:false,
+                msg: 'No existe un heroe con el id: ' + id
+            })
         }
 
-        // Eliminar todas las referencias en 'protagonistas' antes de borrar el héroe
-        await Protagonistas.destroy({ where: { idheroe: id } });
+        //Borrado Logico.
+        //await heroe.update({estado:false});
 
-        // Ahora eliminar el héroe
+        //Borrado de la BD
         await heroe.destroy();
 
-        res.json({
-            ok: true,
-            msg: "Héroe eliminado correctamente.",
+        res.json({ok:true,
+            msj:"Heroe Borrado..",
             data: heroe
+            //usuario:usuario,
+            //autenticado:usuarioAutenticado
         });
+   
+
 
     } catch (error) {
-        console.error('Error en heroeDelete:', error);
-        res.status(500).json({
-            ok: false,
+        console.log(error);
+        res.status(500).json({ok:false,
             msg: 'Hable con el Administrador',
-            err: error.message
-        });
+            err: error
+        })
+
+
     }
-};
-
-
+}
 
 
 

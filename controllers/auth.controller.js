@@ -1,20 +1,15 @@
 const { response } = require("express");
 
-
 //const { Usuario} = require("../models/usuario");
 const Usuario = require("../models/mongoUsuario.model");
-
 
 const bcryptjs = require("bcryptjs");
 const { generarJWT } = require("../helpers/generar-jwt");
 
-
 //const { googleVerify } = require("../helpers/google-verify");
-
 
 const login = async (req, res = response) => {
     const { correo, password } = req.body;
-
 
     try {
         const usuario = await Usuario.findOne({ correo });
@@ -28,7 +23,6 @@ const login = async (req, res = response) => {
                 });
         }
 
-
         // Verificar si el usuario esta activo
         if (!usuario.estado) {
             return res
@@ -39,10 +33,8 @@ const login = async (req, res = response) => {
                 });
         }
 
-
         const validaPassword = bcryptjs.compareSync(password, usuario.password);
         // Verificar la contraseña
-
 
         if (!validaPassword) {
             return res
@@ -53,10 +45,8 @@ const login = async (req, res = response) => {
                 });
         }
 
-
         // Generar el JWT
         const token = await generarJWT(usuario.id);
-
 
         res.json({
             ok: true,
@@ -73,8 +63,6 @@ const login = async (req, res = response) => {
         });
     }
 };
-
-
 
 
 module.exports = {
