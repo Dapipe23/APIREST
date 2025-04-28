@@ -23,7 +23,11 @@ class Server {
             //Ajusto la url para la outorizacion por login
             auth: '/api/auth',
             usuarios: '/api/usuarios',
-            heroes: '/api/heroesMongo'
+            heroes: '/api/heroesMongo',
+            fubolistas: '/api/futbolistas',
+            paises: '/api/paises',
+            contrataciones: '/api/contrataciones',
+            equipos: '/api/equipos'
         }
 
 
@@ -99,6 +103,12 @@ class Server {
         this.app.use(this.pathsMongo.usuarios, require('../routes/mongoUsuario.route'));
 
         this.app.use(this.pathsMongo.heroes, require('../routes/mongoHeroe.route')); 
+
+        this.app.use(this.pathsMongo.fubolistas, require('../routes/mongoFutbolista.route'));
+        this.app.use(this.pathsMongo.paises, require('../routes/mongoPais.route'));
+        this.app.use(this.pathsMongo.contrataciones, require('../routes/mongoContratacion.route'));
+        this.app.use(this.pathsMongo.equipos, require('../routes/mongoEquipo.route'));
+
         
     }
     
