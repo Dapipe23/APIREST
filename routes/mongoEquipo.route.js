@@ -43,7 +43,7 @@ router.put('/:id',[
 router.post('/', [
     validarJWT, // Middleware para el Tokens (descomenta si lo necesitas)
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-    check('Pais', 'El pais es obligatorio').not().isEmpty(),
+    check('pais', 'El pais es obligatorio').not().isEmpty(),
     validarCampos
 ], EquipoPost);
 

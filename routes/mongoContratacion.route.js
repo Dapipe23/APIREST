@@ -42,12 +42,10 @@ router.put('/:id',[
 
 router.post('/', [
     validarJWT, // Middleware para el Tokens (descomenta si lo necesitas)
-    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-    check('bio', 'La biografía es obligatoria').not().isEmpty(),
-    check('img', 'La imagen es obligatoria').not().isEmpty(),
-    check('aparicion', 'La fecha de aparición es obligatoria').not().isEmpty(),
-    check('casa', 'La casa es obligatoria').isIn(['Marvel', 'DC']),
-    check('estado', 'El estado debe ser un valor booleano').isBoolean(),
+    check('idjugador', 'El id es obligatorio').not().isEmpty(),
+    check('idequipo', 'El id es obligatorio').not().isEmpty(),
+    check('desde', 'La fecha de entrada es obligatoria').not().isEmpty(),
+    check('hasta', 'La fecha de salida es obligatoria').not().isEmpty(),
     validarCampos
 ], ContratacionPost);
 

@@ -43,8 +43,9 @@ router.put('/:id',[
 router.post('/', [
     validarJWT, // Middleware para el Tokens (descomenta si lo necesitas)
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-    check('Pos', 'La posicion es obligatoria').not().isEmpty(),
+    check('posicion', 'La posicion es obligatoria').not().isEmpty(),
     check('nacionalidad', 'La nacionalidad es obligatoria').not().isEmpty(),
+    check('equipo', 'El equipo es obligatotio').not().isEmpty(),
     validarCampos
 ], FutbolistaPost);
 

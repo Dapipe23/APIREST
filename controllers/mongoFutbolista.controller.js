@@ -1,17 +1,18 @@
 const { response, request } = require("express");
 const Futbolista = require("../models/mongoFutbolista.model");
 
+// POST - Crear un nuevo futbolista
 const FutbolistaPost = async (req, res = response) => {
-  const { nombre, edad, pais, equipo } = req.body;
+  const { nombre, posicion, nacionalidad, equipo } = req.body;
 
   try {
-    const Futbolista = new Futbolista({ nombre, edad, pais, equipo });
-    await Futbolista.save();
+    const nuevoFutbolista = new Futbolista({ nombre, posicion, nacionalidad, equipo });
+    await nuevoFutbolista.save();
 
     res.status(201).json({
       ok: true,
       msg: "Futbolista creado exitosamente",
-      Futbolista,
+      futbolista: nuevoFutbolista,
     });
   } catch (error) {
     console.error("Error al guardar Futbolista:", error);
@@ -19,29 +20,32 @@ const FutbolistaPost = async (req, res = response) => {
   }
 };
 
+// GET - Obtener todos los futbolistas
 const FutbolistaGet = async (req = request, res = response) => {
   try {
-    const Futbolistaes = await Futbolista.find()
-      .populate("pais", "nombre")
+    const futbolistas = await Futbolista.find()
+      .populate("nacionalidad", "nombre")
       .populate("equipo", "nombre");
 
     res.json({
       ok: true,
-      data: Futbolistaes,
+      data: futbolistas,
     });
   } catch (error) {
+    console.error("Error al obtener Futbolistas:", error);
     res.status(500).json({ ok: false, error: error.message });
   }
 };
 
+// GET - Obtener un futbolista por ID
 const FutbolistaIdGet = async (req, res = response) => {
   const { id } = req.params;
   try {
-    const Futbolista = await Futbolista.findById(id)
-      .populate("pais", "nombre")
+    const futbolistaEncontrado = await Futbolista.findById(id)
+      .populate("nacionalidad", "nombre")
       .populate("equipo", "nombre");
 
-    if (!Futbolista) {
+    if (!futbolistaEncontrado) {
       return res.status(404).json({
         ok: false,
         msg: "Futbolista no encontrado",
@@ -50,7 +54,7 @@ const FutbolistaIdGet = async (req, res = response) => {
 
     res.json({
       ok: true,
-      Futbolista,
+      futbolista: futbolistaEncontrado,
     });
   } catch (error) {
     console.error("Error al obtener Futbolista:", error);
@@ -58,16 +62,27 @@ const FutbolistaIdGet = async (req, res = response) => {
   }
 };
 
+// PUT - Actualizar un futbolista por ID
 const FutbolistaPut = async (req, res = response) => {
   const { id } = req.params;
   const { _id, ...resto } = req.body;
 
   try {
-    const Futbolista = await Futbolista.findByIdAndUpdate(id, resto, { new: true });
+    const futbolistaActualizado = await Futbolista.findByIdAndUpdate(id, resto, { new: true })
+      .populate("nacionalidad", "nombre")
+      .populate("equipo", "nombre");
+
+    if (!futbolistaActualizado) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Futbolista no encontrado para actualizar",
+      });
+    }
+
     res.json({
       ok: true,
       msg: "Futbolista actualizado correctamente",
-      Futbolista,
+      futbolista: futbolistaActualizado,
     });
   } catch (error) {
     console.error("Error al actualizar Futbolista:", error);
@@ -75,15 +90,24 @@ const FutbolistaPut = async (req, res = response) => {
   }
 };
 
+// DELETE - Eliminar un futbolista por ID
 const FutbolistaDelete = async (req, res = response) => {
   const { id } = req.params;
 
   try {
-    const Futbolista = await Futbolista.findByIdAndDelete(id);
+    const futbolistaEliminado = await Futbolista.findByIdAndDelete(id);
+
+    if (!futbolistaEliminado) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Futbolista no encontrado para eliminar",
+      });
+    }
+
     res.json({
       ok: true,
       msg: "Futbolista eliminado correctamente",
-      Futbolista,
+      futbolista: futbolistaEliminado,
     });
   } catch (error) {
     console.error("Error al eliminar Futbolista:", error);

@@ -13,6 +13,11 @@ const FutbolistaSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Pais',
         required: true
+    },
+    equipo: {
+        type: Schema.Types.ObjectId,
+        ref: 'Equipo',
+        required: true
     }
 });
 
